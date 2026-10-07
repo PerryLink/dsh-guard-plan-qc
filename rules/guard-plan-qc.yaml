@@ -1,0 +1,150 @@
+# 防护用品配置核对 规则库
+#
+# 规则数据与代码分离：替换本文件即可切换规则集版本，无需改动 TypeScript。
+#
+# 条款引用纪律（由 shared/ruleset.ts 强制校验）：
+#   - 每条规则必须写全 document / number / clause / excerpt / kind / source，
+#     且 excerpt 必须是逐字摘录，不得改写。
+#   - kind: direct                       条款直接规定了所检查的要求
+#   - kind: derived-from-principle       条款未直接规定，仅能由原则性条款推论（severity 最多 warn）
+#   - kind: institutional-configuration 阈值出自本机构配置（severity 最多 info）
+#
+# ⚠️⚠️ 本规则库的诚实说明：**excerpt 一律不是引文。**
+#   劳动防护用品配备的规范载体是 **GB 39800.1《个体防护装备配备规范》**（分部分标准）与
+#   《劳动防护用品监督管理规定》等。本次核查**未能逐字取得这些文件的条文原文**，
+#   因此本规则库**不伪造任何"原文"**：每条规则的 excerpt 都写明"该条文本次未取得"，
+#   依据状态放在 note 里如实说明；kind 一律降为 derived-from-principle（封顶 warn）
+#   或 institutional-configuration（封顶 info）。
+#   **取得条文后必须做两件事**：把 excerpt 换成真正的逐字摘录，把 kind 升为 direct。
+#   在那之前，本插件的命中信息只应被读作"这一栏没填 / 数量和人数对不上 / 日期越界"，
+#   而**不是**"违反了某条标准"。
+#
+# ⚠️ 另一条边界：本插件**不判断某件用品是否适用于某项作业、防护等级是否足够、
+#   是否属于特种劳动防护用品**。那需要结合作业危害辨识与产品认证，是职业健康专业判断；
+#   本插件只核对**表格本身的齐备与自洽**：
+#     行是否填齐、数量是否为正数、数量能否按人数推算出来、发放日期是否在配置期间内、
+#     有效截止日期是否晚于发放日期、是否覆盖本机构要求的用品类别。
+#   → 因此 requiredFields（有默认值）之外的 requiredCategories 与 factors
+#     **都出厂为空**，未配置即进 skipped，绝不静默通过。
+
+plugin: dsh-guard-plan-qc
+version: "2026.1"
+
+rules:
+  - id: GP-001
+    title: 配置表每行应填写品名、规格型号与配置数量
+    severity: info
+    basis:
+      document: 《个体防护装备配备规范》
+      number: GB 39800.1—2020（个体防护装备配备规范 第1部分：总则；标准号不带"/T"⇒强制性；2020-12-24 发布、2022-01-01 实施；主管部门应急管理部；条号本次未取得）
+      clause: 关于配备记录内容的条款（本次未取得条号）
+      excerpt: 该条文本次未取得：核查未获得 GB 39800.1 的逐字原文，本规则库不伪造引文。
+      kind: institutional-configuration
+      source: https://openstd.samr.gov.cn/bzgk/std/newGbInfo?hcno=B8071B9B0A429EB6067597A7C98629C9
+    params:
+      requiredFields: [品名, 规格型号, 配置数量]
+    note: >-
+      requiredFields 的默认值为 [品名, 规格型号, 配置数量]，可由使用方按本机构表式替换。
+      依据说明：配备记录至少要能说清"配了什么、什么规格、配多少"，否则无法据以发放与核对；
+      这三项是可核对性的**下限**，具体的记录栏目由本机构制度规定。
+      本条只核对字段是否存在（空串视为未填），**不判断所配用品是否适用**。
+
+  - id: GP-002
+    title: 配置数量应为大于零的数字
+    severity: warn
+    basis:
+      document: 《个体防护装备配备规范》
+      number: GB 39800.1—2020（个体防护装备配备规范 第1部分：总则；标准号不带"/T"⇒强制性；2020-12-24 发布、2022-01-01 实施；主管部门应急管理部；条号本次未取得）
+      clause: 关于配备数量的条款（本次未取得条号）
+      excerpt: 该条文本次未取得：核查未获得 GB 39800.1 的逐字原文，本规则库不伪造引文。
+      kind: derived-from-principle
+      source: https://openstd.samr.gov.cn/bzgk/std/newGbInfo?hcno=B8071B9B0A429EB6067597A7C98629C9
+    params:
+      checkQuantity: true
+    note: >-
+      数量必须是可加总的数字，否则"配了多少"无从核对——这是数量栏的**功能前提**，
+      属原则性推论；本次未取得明文条号，故封顶 warn。
+      解析时可带单位（套/件/个/双/顶/副/只/条/张/台/把/瓶/盒/付/支），
+      也接受全角数字与千分位（如「１，２００」）；解析不了的值会单独报出，
+      与"数量为零"是两条不同的信息。
+      checkQuantity 为 false 时本条不执行。
+
+  - id: GP-003
+    title: 配置数量应能按配置人数与每人基数推算出来
+    severity: info
+    basis:
+      document: 《个体防护装备配备规范》
+      number: GB 39800.1—2020（个体防护装备配备规范 第1部分：总则；标准号不带"/T"⇒强制性；2020-12-24 发布、2022-01-01 实施；主管部门应急管理部；条号本次未取得）
+      clause: 关于配备数量的条款（本次未取得条号）
+      excerpt: 该条文本次未取得：核查未获得 GB 39800.1 的逐字原文，本规则库不伪造引文。
+      kind: institutional-configuration
+      source: https://openstd.samr.gov.cn/bzgk/std/newGbInfo?hcno=B8071B9B0A429EB6067597A7C98629C9
+    params:
+      factors: []
+    note: >-
+      factors 出厂为空，表示**未配置**，本条进 skipped。
+      依据说明："每人几件、多长时间换一次"随**用品类别、作业类型与本机构配备标准**变化，
+      不同标准与不同行业差别很大；本插件**不硬编码任何基数**。
+      配置形如：
+        factors:
+          - { match: 安全帽, perPerson: 1, tolerance: 0 }
+          - { match: 绝缘手套, perPerson: 2, tolerance: 1 }
+      match 为品名包含匹配，perPerson 为每人基数，tolerance 为允许差额（默认 0）。
+      本条只做乘法与差额比对，**不判断该基数是否合理**——基数本身就是使用方从标准里查来的。
+
+  - id: GP-004
+    title: 发放日期应在配置期间内
+    severity: warn
+    basis:
+      document: 《个体防护装备配备规范》
+      number: GB 39800.1—2020（个体防护装备配备规范 第1部分：总则；标准号不带"/T"⇒强制性；2020-12-24 发布、2022-01-01 实施；主管部门应急管理部；条号本次未取得）
+      clause: 关于配备与发放记录的条款（本次未取得条号）
+      excerpt: 该条文本次未取得：核查未获得 GB 39800.1 的逐字原文，本规则库不伪造引文。
+      kind: derived-from-principle
+      source: https://openstd.samr.gov.cn/bzgk/std/newGbInfo?hcno=B8071B9B0A429EB6067597A7C98629C9
+    params: {}
+    note: >-
+      发放日期落在配置期间内，是"这份配置表对应这段期间"的**自洽条件**；
+      本次未取得明文条号，故封顶 warn。
+      配置期间由材料顶层的 periodFrom / periodTo 提供；**两者都缺时本条进 skipped**，
+      不会假定任何期间。日期无法解析时会单独报出，**不会静默跳过**。
+
+  - id: GP-005
+    title: 有效截止日期应晚于发放日期
+    severity: warn
+    basis:
+      document: 《个体防护装备配备规范》
+      number: GB 39800.1—2020（个体防护装备配备规范 第1部分：总则；标准号不带"/T"⇒强制性；2020-12-24 发布、2022-01-01 实施；主管部门应急管理部；条号本次未取得）
+      clause: 关于使用期限的条款（本次未取得条号）
+      excerpt: 该条文本次未取得：核查未获得 GB 39800.1 的逐字原文，本规则库不伪造引文。
+      kind: derived-from-principle
+      source: https://openstd.samr.gov.cn/bzgk/std/newGbInfo?hcno=B8071B9B0A429EB6067597A7C98629C9
+    params: {}
+    note: >-
+      "有效期截止日必须晚于发放日"是有效期的**语义前提**，属原则性推论；
+      本次未取得明文条号，故封顶 warn。
+      本条只在材料同时提供发放日期与有效截止日期时执行；
+      **不判断该有效期长短是否恰当**（那取决于用品类别与作业环境），
+      也**不判断按更换周期推算出的到期日是否合理**——更换周期本身由使用方与标准决定。
+
+  - id: GP-006
+    title: 配置表应覆盖本机构要求的用品类别
+    severity: info
+    basis:
+      document: 《个体防护装备配备规范》
+      number: GB 39800.1—2020（个体防护装备配备规范 第1部分：总则；标准号不带"/T"⇒强制性；2020-12-24 发布、2022-01-01 实施；主管部门应急管理部；条号本次未取得）
+      clause: 关于配备类别的条款（本次未取得条号）
+      excerpt: 该条文本次未取得：核查未获得 GB 39800.1 的逐字原文，本规则库不伪造引文。
+      kind: institutional-configuration
+      source: https://openstd.samr.gov.cn/bzgk/std/newGbInfo?hcno=B8071B9B0A429EB6067597A7C98629C9
+    params:
+      requiredCategories: []
+    note: >-
+      requiredCategories 出厂为空，表示**未配置**，本条进 skipped。
+      依据说明：应当配备哪些用品取决于**本工程的作业危害辨识结果**，
+      不同工程、不同作业类型差别很大；本插件**不硬编码任何用品清单**。
+      本条按品名与规格型号做**字面包含**比对，因此名称写法不一致（如"安全帽"与"安全头盔"）
+      会造成误报，建议统一台账用词，或把常见写法一并列入清单。
+      **本条只核对"是否出现"，不判断该用品是否适用于本工程**。
+
+disabled: []

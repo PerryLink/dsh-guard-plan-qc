@@ -1,0 +1,29 @@
+{
+  "ruleId": "GP-006",
+  "configure": {
+    "GP-006": {
+      "requiredCategories": [
+        "安全帽",
+        "绝缘手套"
+      ]
+    }
+  },
+  "pairs": [
+    {
+      "name": "expected-state",
+      "material": "GP-006-compliant.json",
+      "expect": {
+        "ruleId": "GP-006",
+        "count": 0
+      }
+    },
+    {
+      "name": "difference-present",
+      "material": "GP-006-unsafe.json",
+      "expect": {
+        "ruleId": "GP-006",
+        "count": 1
+      }
+    }
+  ]
+}

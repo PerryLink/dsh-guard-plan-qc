@@ -1,0 +1,37 @@
+{
+  "ruleId": "GP-003",
+  "configure": {
+    "GP-003": {
+      "factors": [
+        {
+          "match": "安全帽",
+          "perPerson": 1,
+          "tolerance": 0
+        },
+        {
+          "match": "绝缘手套",
+          "perPerson": 2,
+          "tolerance": 0
+        }
+      ]
+    }
+  },
+  "pairs": [
+    {
+      "name": "expected-state",
+      "material": "GP-003-compliant.json",
+      "expect": {
+        "ruleId": "GP-003",
+        "count": 0
+      }
+    },
+    {
+      "name": "difference-present",
+      "material": "GP-003-unsafe.json",
+      "expect": {
+        "ruleId": "GP-003",
+        "count": 1
+      }
+    }
+  ]
+}
