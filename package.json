@@ -1,6 +1,6 @@
 {
   "name": "dsh-guard-plan-qc",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "劳动保护与安全防护用品配置表核对（按公开的配备标准核对品名规格与配置数量，仅提示差异，不作出定性结论）",
   "type": "module",
   "main": "lib/index.mjs",
