@@ -49,8 +49,7 @@ column names, plus the plan's headcount and period — and returns a report.
 ## Install
 
 ```sh
-pnpm pack
-dsh plugin --profile <name> add ./dsh-guard-plan-qc-0.1.0.tgz
+dsh plugin --profile <name> add dsh-guard-plan-qc
 dsh --profile <name> --dump-config | grep 'dsh-guard-plan-qc'
 ```
 

@@ -39,8 +39,7 @@ suffices, or whether it counts as special protective equipment.
 ## Install
 
 ```sh
-pnpm pack
-dsh plugin --profile <name> add ./*.tgz
+dsh plugin --profile <name> add dsh-guard-plan-qc
 dsh --profile <name> --dump-config | grep 'dsh-guard-plan-qc'
 ```
 
