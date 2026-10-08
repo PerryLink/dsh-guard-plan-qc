@@ -1,4 +1,23 @@
-# dsh-guard-plan-qc
+# dsh-guard-plan-qc — Verificação da tabela de configuração de equipamentos de proteção laboral e de segurança
+
+`dsh-guard-plan-qc` lê uma tabela de configuração de equipamentos de proteção laboral —o número de pessoas e o período de configuração que o material declara, mais uma linha por produto configurado— e verifica a completude e a coerência interna dessa tabela: se cada linha preenche 品名 (nome), 规格型号 (especificação) e 配置数量 (quantidade), se a quantidade é analisável como um número maior que zero, se pode ser deduzida do número de pessoas declarado pelo fator por pessoa que você configurar, se a 发放日期 (data de entrega) cai dentro do período de configuração, se a 有效截止日期 (data de validade) é posterior à data de entrega e se a tabela cobre as categorias de produtos que você exige.
+
+## O que ele responde
+
+| Você pergunta | O que ele responde |
+|---|---|
+| Uma linha tem o nome, mas deixa 规格型号 vazio. Isso é reportado? | Sim. `GP-001` exige que cada linha preencha os campos de `requiredFields` —de fábrica 品名, 规格型号 e 配置数量, substituíveis pelas colunas da sua própria tabela— e reporta a linha juntamente com os campos que faltam; uma célula vazia conta como não preenchida. Verifica que as colunas estão preenchidas, não que o produto ou a sua especificação estejam corretos. |
+| A célula de 配置数量 diz 若干. É o mesmo que uma quantidade zero? | Não. `GP-002` reporta os dois em separado: um valor que não consegue analisar (como 若干) é reportado como não sendo um número, enquanto um valor que analisa mas não é maior que zero é reportado com a própria cifra. «2双», «１，２００» e «2 件» são analisados, com a unidade junta. Não verifica se a cifra é real nem se a quantidade chega; com `checkQuantity` em false a regra não é executada. |
+| O número de pessoas é 20 e `factors` dá 2 luvas isolantes por pessoa, mas a linha configura 30. Isso é detetado? | Sim, depois de configurar `factors`. `GP-003` multiplica o fator por pessoa pelo número de pessoas e reporta a linha correspondente cuja quantidade difere mais do que a sua `tolerance`. `factors` vem vazio de fábrica, portanto tal como é entregue a regra declara-se em `skipped` com esse motivo em vez de passar em silêncio; também se declara aí se o material não declarar o número de pessoas. O fator é o dado que você consultou, não uma cifra nacional: a regra não julga se é razoável. |
+| O período de configuração é 2026-03-01 a 2026-03-31 e uma 发放日期 diz 2026-02-20. É reportado? | Sim. `GP-004` reporta que essa linha é anterior a `periodFrom`. O período vem de `periodFrom` / `periodTo` no topo do material; se faltarem ambos, a regra declara-se em `skipped` em vez de presumir um período, e uma data que não consegue analisar é reportada à parte em vez de ser omitida em silêncio. |
+| A 有效截止日期 é o mesmo dia da 发放日期. Passa? | Não. `GP-005` exige que a data de validade seja posterior à data de entrega e reporta a linha quando não é, e só é executada se a linha trouxer as duas datas. Se esse período de validade é suficientemente longo —depende do produto e da função— não se julga. |
+| A tabela diz 安全帽 e a minha lista de categorias exigidas diz 安全头盔. Será reportado como não coberto? | Sim. `GP-006` compara por contenção literal com 品名 e 规格型号, por isso outra forma de nomear o mesmo produto é reportada como não coberta; inclua também as variantes habituais ou unifique a terminologia da tabela. `requiredCategories` vem vazio de fábrica, portanto tal como é entregue a regra declara-se em `skipped`. Verifica apenas se a categoria aparece, não se o produto serve para a obra. |
+
+## Normas que segue
+
+| Documento | Número | Regras que o citam |
+|---|---|---|
+| 《个体防护装备配备规范》 | GB 39800.1—2020（个体防护装备配备规范 第1部分：总则；标准号不带"/T"⇒强制性；2020-12-24 发布、2022-01-01 实施；主管部门应急管理部；条号本次未取得） | GP-001, GP-002, GP-003, GP-004, GP-005, GP-006 |
 
 **Boundary:** this plugin checks one **劳动防护用品配置表** for what a table can be held to — that every row
 names a product with a specification and a quantity, that the quantity is a positive number, that it

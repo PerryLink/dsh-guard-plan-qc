@@ -1,4 +1,23 @@
-# dsh-guard-plan-qc
+# dsh-guard-plan-qc — Labour protection and safety protective equipment configuration table check
+
+`dsh-guard-plan-qc` reads one 劳动防护用品配置表 — the headcount and period the plan states, plus one row per configured product — and checks that table's own completeness and internal consistency: that every row fills 品名 (product name), 规格型号 (specification) and 配置数量 (quantity), that the quantity parses as a number greater than zero, that it reconciles with the headcount the plan states times the per-person factor you configure, that the 发放日期 (issue date) falls inside the plan period, that the 有效截止日期 (expiry date) is later than the issue date, and that the table covers the product categories you require.
+
+## What it answers
+
+| You ask | What it answers |
+|---|---|
+| A row names the product but leaves 规格型号 empty. Is that reported? | Yes. `GP-001` requires every row to fill the fields in `requiredFields` — shipped as 品名, 规格型号 and 配置数量, replaceable with your own table's columns — and reports the row together with the fields it is missing; an empty string counts as unfilled. It checks that the columns are filled, not whether the product or its specification is the right one. |
+| The 配置数量 cell says 若干. Is that the same as a quantity of zero? | No. `GP-002` reports the two separately: a value it cannot parse (such as 若干) is reported as not being a number, while a value that parses but is not greater than zero is reported with the figure itself. `2双`, `１，２００` and `2 件` all parse, unit attached. The rule does not check whether the figure is true or whether the quantity is enough; with `checkQuantity` set to false it does not run at all. |
+| The headcount is 20 and `factors` gives 绝缘手套 2 per person, but the row configures 30. Will that be caught? | Yes, once `factors` is configured. `GP-003` multiplies the per-person factor by the headcount and reports a matching row whose quantity differs by more than its `tolerance`. `factors` ships empty, so as delivered the rule reports itself in `skipped` with that reason instead of passing silently; it also reports itself there when the material declares no headcount. The factor is the figure you looked up, not a national one — the rule does not judge whether it is reasonable. |
+| The plan period is 2026-03-01 to 2026-03-31 and a 发放日期 reads 2026-02-20. Is it reported? | Yes. `GP-004` reports that row as earlier than `periodFrom`. The period comes from the material's top-level `periodFrom` / `periodTo`; when both are missing the rule reports itself in `skipped` rather than assuming a period, and a date it cannot parse is reported separately instead of being skipped silently. |
+| The 有效截止日期 is the same day as the 发放日期. Does it pass? | No. `GP-005` requires the expiry date to be later than the issue date and reports the row when it is not, and it runs only when the row states both dates. Whether that validity period is long enough — it depends on the product and the job — is not judged. |
+| The table lists 安全帽 but my required list says 安全头盔. Will it be reported as uncovered? | Yes. `GP-006` compares by literal containment against 品名 and 规格型号, so a different wording for the same product is reported as uncovered; list the common spellings as well, or unify the table's wording. `requiredCategories` ships empty, so as delivered the rule reports itself in `skipped`. It checks only whether the category appears, not whether the product suits the project. |
+
+## Standards it follows
+
+| Document | Number | Cited by rules |
+|---|---|---|
+| 《个体防护装备配备规范》 | GB 39800.1—2020（个体防护装备配备规范 第1部分：总则；标准号不带"/T"⇒强制性；2020-12-24 发布、2022-01-01 实施；主管部门应急管理部；条号本次未取得） | GP-001, GP-002, GP-003, GP-004, GP-005, GP-006 |
 
 **Boundary:** this plugin checks one **劳动防护用品配置表** for what a table can be held to — that every row
 names a product with a specification and a quantity, that the quantity is a positive number, that it

@@ -1,4 +1,23 @@
-# dsh-guard-plan-qc
+# dsh-guard-plan-qc — Verificación de la tabla de configuración de equipos de protección laboral y de seguridad
+
+`dsh-guard-plan-qc` lee una tabla de configuración de equipos de protección laboral —el número de personas y el periodo de configuración que declara el material, más una fila por producto configurado— y comprueba la completitud y la coherencia interna de esa tabla: que cada fila rellene 品名 (nombre), 规格型号 (especificación) y 配置数量 (cantidad), que la cantidad se analice como un número mayor que cero, que se pueda deducir del número de personas declarado por el factor por persona que usted configure, que la 发放日期 (fecha de entrega) caiga dentro del periodo de configuración, que la 有效截止日期 (fecha de caducidad) sea posterior a la fecha de entrega y que la tabla cubra las categorías de productos que usted exige.
+
+## Qué responde
+
+| Usted pregunta | Qué responde |
+|---|---|
+| Una fila tiene el nombre, pero deja 规格型号 vacío. ¿Se informa? | Sí. `GP-001` exige que cada fila rellene los campos de `requiredFields` —de fábrica 品名, 规格型号 y 配置数量, sustituibles por las columnas de su propia tabla— e informa de la fila junto con los campos que le faltan; una celda vacía cuenta como no rellenada. Comprueba que las columnas estén rellenas, no que el producto o su especificación sean los correctos. |
+| La celda de 配置数量 dice 若干. ¿Es lo mismo que una cantidad de cero? | No. `GP-002` informa de ambos por separado: un valor que no puede analizar (como 若干) se informa como que no es un número, mientras que un valor que sí analiza pero no es mayor que cero se informa con la propia cifra. «2双», «１，２００» y «2 件» se analizan, con la unidad pegada. No comprueba si la cifra es real ni si la cantidad basta; con `checkQuantity` en false la regla no se ejecuta. |
+| El número de personas es 20 y `factors` da 2 guantes aislantes por persona, pero la fila configura 30. ¿Se detecta? | Sí, una vez configurado `factors`. `GP-003` multiplica el factor por persona por el número de personas e informa de la fila coincidente cuya cantidad difiere más de su `tolerance`. `factors` viene vacío de fábrica, así que tal como se entrega la regla se declara en `skipped` con ese motivo en lugar de pasar en silencio; también se declara ahí si el material no declara el número de personas. El factor es el dato que usted consultó, no una cifra nacional: la regla no juzga si es razonable. |
+| El periodo de configuración es 2026-03-01 a 2026-03-31 y una 发放日期 dice 2026-02-20. ¿Se informa? | Sí. `GP-004` informa de que esa fila es anterior a `periodFrom`. El periodo procede de `periodFrom` / `periodTo` en el nivel superior del material; si faltan los dos, la regla se declara en `skipped` en lugar de suponer un periodo, y una fecha que no puede analizar se informa aparte en vez de omitirse en silencio. |
+| La 有效截止日期 es el mismo día que la 发放日期. ¿Pasa? | No. `GP-005` exige que la fecha de caducidad sea posterior a la fecha de entrega e informa de la fila cuando no lo es, y solo se ejecuta si la fila trae ambas fechas. Si ese periodo de validez es lo bastante largo —depende del producto y del puesto de trabajo— no se juzga. |
+| La tabla pone 安全帽 y mi lista de categorías requeridas pone 安全头盔. ¿Se informará como no cubierta? | Sí. `GP-006` compara por contención literal contra 品名 y 规格型号, así que otra forma de nombrar el mismo producto se informa como no cubierta; incluya también las variantes habituales o unifique la terminología de la tabla. `requiredCategories` viene vacío de fábrica, así que tal como se entrega la regla se declara en `skipped`. Solo comprueba si la categoría aparece, no si el producto es apto para la obra. |
+
+## Normas que sigue
+
+| Documento | Número | Reglas que lo citan |
+|---|---|---|
+| 《个体防护装备配备规范》 | GB 39800.1—2020（个体防护装备配备规范 第1部分：总则；标准号不带"/T"⇒强制性；2020-12-24 发布、2022-01-01 实施；主管部门应急管理部；条号本次未取得） | GP-001, GP-002, GP-003, GP-004, GP-005, GP-006 |
 
 **Boundary:** this plugin checks one **劳动防护用品配置表** for what a table can be held to — that every row
 names a product with a specification and a quantity, that the quantity is a positive number, that it
