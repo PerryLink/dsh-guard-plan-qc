@@ -1,6 +1,14 @@
 # dsh-guard-plan-qc — Labour protection and safety protective equipment configuration table check
 
+[![DSH Market](https://raw.githubusercontent.com/2BingLing/dsh-market/master/assets/readme/badge-listed-en.svg)](https://dsh.market/)
+
 `dsh-guard-plan-qc` reads one 劳动防护用品配置表 — the headcount and period the plan states, plus one row per configured product — and checks that table's own completeness and internal consistency: that every row fills 品名 (product name), 规格型号 (specification) and 配置数量 (quantity), that the quantity parses as a number greater than zero, that it reconciles with the headcount the plan states times the per-person factor you configure, that the 发放日期 (issue date) falls inside the plan period, that the 有效截止日期 (expiry date) is later than the issue date, and that the table covers the product categories you require.
+
+## What it looks like
+
+![Terminal demo of dsh-guard-plan-qc: real output over its GP-002 fixture](https://raw.githubusercontent.com/PerryLink/dsh-guard-plan-qc/main/docs/assets/dsh-guard-plan-qc-demo.png)
+
+Real output from this plugin over its own `GP-002` test fixture — not a mock-up. The rule pack ships no invented quotations, so a finding names both the clause it applied and the fact that the clause text was not obtained.
 
 ## What it answers
 

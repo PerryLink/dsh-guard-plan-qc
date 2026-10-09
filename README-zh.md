@@ -1,6 +1,14 @@
 # dsh-guard-plan-qc — 劳动保护与安全防护用品配置表核对
 
+[![DSH Market](https://raw.githubusercontent.com/2BingLing/dsh-market/master/assets/readme/badge-listed-en.svg)](https://dsh.market/)
+
 `dsh-guard-plan-qc` 读取一份劳动防护用品配置表——材料声明的配置人数与配置期间，加每种用品一行——核对这份表格自身的齐备与自洽：每行是否填写品名、规格型号与配置数量，配置数量能否解析为大于零的数字，配置数量能否按配置人数与本机构配置的每人基数推算出来，发放日期是否落在配置期间内，有效截止日期是否晚于发放日期，以及配置表是否覆盖本机构要求的用品类别。
+
+## 实际输出长什么样
+
+![Terminal demo of dsh-guard-plan-qc: real output over its GP-002 fixture](https://raw.githubusercontent.com/PerryLink/dsh-guard-plan-qc/main/docs/assets/dsh-guard-plan-qc-demo.png)
+
+本插件对自己 `GP-002` 测试夹具的**真实输出**，不是示意图。规则库不伪造引文，因此每条发现都会同时写明所引条款，以及该条款原文本次未取得。
 
 ## 它回答什么问题
 

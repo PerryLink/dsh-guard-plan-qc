@@ -1,6 +1,14 @@
 # dsh-guard-plan-qc — Verificação da tabela de configuração de equipamentos de proteção laboral e de segurança
 
+[![DSH Market](https://raw.githubusercontent.com/2BingLing/dsh-market/master/assets/readme/badge-listed-en.svg)](https://dsh.market/)
+
 `dsh-guard-plan-qc` lê uma tabela de configuração de equipamentos de proteção laboral —o número de pessoas e o período de configuração que o material declara, mais uma linha por produto configurado— e verifica a completude e a coerência interna dessa tabela: se cada linha preenche 品名 (nome), 规格型号 (especificação) e 配置数量 (quantidade), se a quantidade é analisável como um número maior que zero, se pode ser deduzida do número de pessoas declarado pelo fator por pessoa que você configurar, se a 发放日期 (data de entrega) cai dentro do período de configuração, se a 有效截止日期 (data de validade) é posterior à data de entrega e se a tabela cobre as categorias de produtos que você exige.
+
+## Como é a saída
+
+![Terminal demo of dsh-guard-plan-qc: real output over its GP-002 fixture](https://raw.githubusercontent.com/PerryLink/dsh-guard-plan-qc/main/docs/assets/dsh-guard-plan-qc-demo.png)
+
+Saída real deste plugin sobre o seu próprio fixture de teste `GP-002` — não é uma simulação. O pacote de regras não inventa citações, por isso cada achado nomeia a cláusula aplicada e avisa que o seu texto não foi obtido.
 
 ## O que ele responde
 
