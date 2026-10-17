@@ -4,6 +4,13 @@
 
 `dsh-guard-plan-qc` 读取一份劳动防护用品配置表——材料声明的配置人数与配置期间，加每种用品一行——核对这份表格自身的齐备与自洽：每行是否填写品名、规格型号与配置数量，配置数量能否解析为大于零的数字，配置数量能否按配置人数与本机构配置的每人基数推算出来，发放日期是否落在配置期间内，有效截止日期是否晚于发放日期，以及配置表是否覆盖本机构要求的用品类别。
 
+## Install
+
+```sh
+dsh plugin --profile <name> add dsh-guard-plan-qc
+dsh --profile <name> --dump-config | grep 'dsh-guard-plan-qc'
+```
+
 ## 实际输出长什么样
 
 ![Terminal demo of dsh-guard-plan-qc: real output over its GP-002 fixture](https://raw.githubusercontent.com/PerryLink/dsh-guard-plan-qc/main/docs/assets/dsh-guard-plan-qc-hero.png)
@@ -64,13 +71,6 @@ suffices, or whether it counts as special protective equipment.
 ## What it does
 
 规则表、字段说明与行为细节见 [README.md](README.md#what-it-does)（英文主版本）。本插件只列出材料与所引条款之间的字面差异，并对无法执行的检查在 `skipped` 中逐项说明。
-
-## Install
-
-```sh
-dsh plugin --profile <name> add dsh-guard-plan-qc
-dsh --profile <name> --dump-config | grep 'dsh-guard-plan-qc'
-```
 
 ## Configuration
 

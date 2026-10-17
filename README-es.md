@@ -4,6 +4,13 @@
 
 `dsh-guard-plan-qc` lee una tabla de configuración de equipos de protección laboral —el número de personas y el periodo de configuración que declara el material, más una fila por producto configurado— y comprueba la completitud y la coherencia interna de esa tabla: que cada fila rellene 品名 (nombre), 规格型号 (especificación) y 配置数量 (cantidad), que la cantidad se analice como un número mayor que cero, que se pueda deducir del número de personas declarado por el factor por persona que usted configure, que la 发放日期 (fecha de entrega) caiga dentro del periodo de configuración, que la 有效截止日期 (fecha de caducidad) sea posterior a la fecha de entrega y que la tabla cubra las categorías de productos que usted exige.
 
+## Install
+
+```sh
+dsh plugin --profile <name> add dsh-guard-plan-qc
+dsh --profile <name> --dump-config | grep 'dsh-guard-plan-qc'
+```
+
 ## Cómo se ve la salida
 
 ![Terminal demo of dsh-guard-plan-qc: real output over its GP-002 fixture](https://raw.githubusercontent.com/PerryLink/dsh-guard-plan-qc/main/docs/assets/dsh-guard-plan-qc-hero.png)
@@ -64,13 +71,6 @@ suffices, or whether it counts as special protective equipment.
 ## What it does
 
 La tabla de reglas, los campos y el comportamiento detallado están en [README.md](README.md#what-it-does) (versión principal en inglés). El plugin sólo enumera divergencias literales frente a las cláusulas citadas e indica en `skipped` cada comprobación que no pudo ejecutarse.
-
-## Install
-
-```sh
-dsh plugin --profile <name> add dsh-guard-plan-qc
-dsh --profile <name> --dump-config | grep 'dsh-guard-plan-qc'
-```
 
 ## Configuration
 
