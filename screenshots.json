@@ -1,0 +1,14 @@
+[
+  {
+    "path": "docs/assets/dsh-guard-plan-qc-hero.png",
+    "kind": "hero",
+    "alt": "dsh-guard-plan-qc terminal output",
+    "caption": "Real dsh-guard-plan-qc checker output; 33 tests passed."
+  },
+  {
+    "path": "docs/assets/dsh-guard-plan-qc-demo.gif",
+    "kind": "demo",
+    "alt": "Animated dsh-guard-plan-qc terminal session",
+    "caption": "The same run, assembled line by line."
+  }
+]
