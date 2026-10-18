@@ -40,21 +40,11 @@ dsh --profile <name> --dump-config | grep 'dsh-guard-plan-qc'
 
 **边界（中文译文，以英文原文为准）：** 本插件核对一份**劳动防护用品配置表**，范围限于表格可以要求到的内容——每行是否写明用品名称、规格与数量，数量是否为正数，是否与方案中写明的配发人数相符，发放日期是否落在方案期间之内，失效日期是否晚于发放日期，以及表格是否覆盖你要求的类别。它**不**判定某种用品对某种危害因素是否属于正确的防护、其防护等级是否足够，也不判定其是否属于特种劳动防护用品。
 
-> ### ⚠️ Read this before trusting a citation in the report
+> ### ⚠️ 在采信报告中的引文之前，请先读这一节（以英文原文为准）
 >
-> **Every `excerpt` in this plugin's rule pack says, in so many words, that the clause text was not
-> obtained.** The regime lives in **GB 39800.1《个体防护装备配备规范》** and 《劳动防护用品监督管理规定》.
-> The verification pass for this plugin could not retrieve verbatim clause text from them, so rather than
-> paraphrase a quotation the pack states the gap in the `excerpt` field itself and puts the honest
-> reasoning in `note`. Everything is therefore capped at `warn` (principle-derived) or `info` (locally
-> configured), and a test asserts that no rule claims a quotation it does not have. **When the texts are
-> in hand, two things must be done: replace each `excerpt` with the real clause, and raise `kind` to
-> `direct`.**
+> **本插件规则库中的每一条 `excerpt` 都明确写着：本次未取得条款原文。** 该制度见于 **GB 39800.1《个体防护装备配备规范》**和《劳动防护用品监督管理规定》。针对本插件的核验过程无法从这些文件中取得逐字条款原文，因此规则库没有转述引文，而是把这一缺口写在 `excerpt` 字段本身，并把诚实的理由写进 `note`。因此一切都封顶在 `warn`（源自原则）或 `info`（本地配置），并有测试断言：没有任何一条规则声称拥有一条它并不拥有的引文。**拿到原文后，必须做两件事：把每条 `excerpt` 替换为真实条款，并把 `kind` 提升为 `direct`。**
 >
-> **The two numbers that would make this plugin powerful are the two it refuses to invent.** How many
-> items each person needs (`GP-003` `factors`) and which product categories a job must cover (`GP-006`
-> `requiredCategories`) depend on the hazard identification for *your* project, not on a national figure.
-> Both ship **empty**, and a rule whose list is unset reports itself in `skipped` rather than passing.
+> **能让本插件真正有力的两个数字，正是它拒绝编造的两个数字。** 每人需要多少件用品（`GP-003` 的 `factors`）以及某个岗位必须覆盖哪些产品类别（`GP-006` 的 `requiredCategories`），取决于*你*项目的危害辨识，而不是某个全国性数字。两者出厂皆为**空**，词表未设置的规则会报告自己进了 `skipped`，而不是通过。
 
 ## Compatibility
 
