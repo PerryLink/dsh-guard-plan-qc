@@ -1,5 +1,7 @@
 # dsh-guard-plan-qc — 劳动保护与安全防护用品配置表核对
 
+[English](README.md) · [简体中文](README-zh.md) · [Español](README-es.md) · [Português](README-pt.md) · [हिन्दी](README-hi.md)
+
 [![DSH Market](https://raw.githubusercontent.com/2BingLing/dsh-market/master/assets/readme/badge-listed-en.svg)](https://dsh.market/)
 
 `dsh-guard-plan-qc` 读取一份劳动防护用品配置表——材料声明的配置人数与配置期间，加每种用品一行——核对这份表格自身的齐备与自洽：每行是否填写品名、规格型号与配置数量，配置数量能否解析为大于零的数字，配置数量能否按配置人数与本机构配置的每人基数推算出来，发放日期是否落在配置期间内，有效截止日期是否晚于发放日期，以及配置表是否覆盖本机构要求的用品类别。
