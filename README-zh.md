@@ -38,12 +38,7 @@ dsh --profile <name> --dump-config | grep 'dsh-guard-plan-qc'
 |---|---|---|
 | 《个体防护装备配备规范》 | GB 39800.1—2020（个体防护装备配备规范 第1部分：总则；标准号不带"/T"⇒强制性；2020-12-24 发布、2022-01-01 实施；主管部门应急管理部；条号本次未取得） | GP-001, GP-002, GP-003, GP-004, GP-005, GP-006 |
 
-**Boundary:** this plugin checks one **劳动防护用品配置表** for what a table can be held to — that every row
-names a product with a specification and a quantity, that the quantity is a positive number, that it
-reconciles with the headcount the plan states, that the issue date falls inside the plan period, that an
-expiry date follows the issue date, and that the table covers the categories you require. It does **not**
-judge whether a given product is the right protection for a given hazard, whether its protection level
-suffices, or whether it counts as special protective equipment.
+**边界（中文译文，以英文原文为准）：** 本插件核对一份**劳动防护用品配置表**，范围限于表格可以要求到的内容——每行是否写明用品名称、规格与数量，数量是否为正数，是否与方案中写明的配发人数相符，发放日期是否落在方案期间之内，失效日期是否晚于发放日期，以及表格是否覆盖你要求的类别。它**不**判定某种用品对某种危害因素是否属于正确的防护、其防护等级是否足够，也不判定其是否属于特种劳动防护用品。
 
 > ### ⚠️ Read this before trusting a citation in the report
 >
