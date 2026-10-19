@@ -29,6 +29,35 @@ Salida real de este plugin sobre su propio fixture de prueba `GP-002` — no es 
 
 La tabla siguiente es el conjunto de ejemplos: la primera fila es el caso detallado y las demás son casos breves.
 
+#### Salida detallada
+
+**Herramienta** `guard_plan_qc`
+
+**Entrada**
+
+~~~json
+{"headcount":20,"rows":[{"品名":"安全帽","配置数量":"若干"}]}
+~~~
+ 
+**Salida**
+
+~~~json
+{
+  "id": "dsh-guard-plan-qc.GP-002.4f14475e",
+  "ruleId": "GP-002",
+  "severity": "warn",
+  "locator": {
+    "column": "配置数量",
+    "row": 1
+  },
+  "found": "第 1 行配置数量「若干」不是数字",
+  "expected": "配置数量应写成数字（可带单位，如「2双」）",
+  "fix": "改用数字填写，例如 2 或 2双"
+}
+~~~
+
+*Observado en `tests/fixtures/GP-002/GP-002-unsafe.json (cases.json expects GP-002 count 1); run via lib/index.mjs rules/guard-plan-qc.yaml`*
+
 | Usted pregunta | Qué responde |
 |---|---|
 | Una fila tiene el nombre, pero deja 规格型号 vacío. ¿Se informa? | Sí. `GP-001` exige que cada fila rellene los campos de `requiredFields` —de fábrica 品名, 规格型号 y 配置数量, sustituibles por las columnas de su propia tabla— e informa de la fila junto con los campos que le faltan; una celda vacía cuenta como no rellenada. Comprueba que las columnas estén rellenas, no que el producto o su especificación sean los correctos. |

@@ -29,6 +29,35 @@ Saída real deste plugin sobre o seu próprio fixture de teste `GP-002` — não
 
 A tabela abaixo é o conjunto de exemplos: a primeira linha é o caso detalhado e as demais são casos curtos.
 
+#### Saída detalhada
+
+**Ferramenta** `guard_plan_qc`
+
+**Entrada**
+
+~~~json
+{"headcount":20,"rows":[{"品名":"安全帽","配置数量":"若干"}]}
+~~~
+ 
+**Saída**
+
+~~~json
+{
+  "id": "dsh-guard-plan-qc.GP-002.4f14475e",
+  "ruleId": "GP-002",
+  "severity": "warn",
+  "locator": {
+    "column": "配置数量",
+    "row": 1
+  },
+  "found": "第 1 行配置数量「若干」不是数字",
+  "expected": "配置数量应写成数字（可带单位，如「2双」）",
+  "fix": "改用数字填写，例如 2 或 2双"
+}
+~~~
+
+*Observado em `tests/fixtures/GP-002/GP-002-unsafe.json (cases.json expects GP-002 count 1); run via lib/index.mjs rules/guard-plan-qc.yaml`*
+
 | Você pergunta | O que ele responde |
 |---|---|
 | Uma linha tem o nome, mas deixa 规格型号 vazio. Isso é reportado? | Sim. `GP-001` exige que cada linha preencha os campos de `requiredFields` —de fábrica 品名, 规格型号 e 配置数量, substituíveis pelas colunas da sua própria tabela— e reporta a linha juntamente com os campos que faltam; uma célula vazia conta como não preenchida. Verifica que as colunas estão preenchidas, não que o produto ou a sua especificação estejam corretos. |

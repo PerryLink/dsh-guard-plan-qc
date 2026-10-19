@@ -29,6 +29,35 @@ dsh --profile <name> --dump-config | grep 'dsh-guard-plan-qc'
 
 下表是示例集：第一行是详细走查，其余行是简短案例。
 
+#### 详细输出
+
+**工具** `guard_plan_qc`
+
+**输入**
+
+~~~json
+{"headcount":20,"rows":[{"品名":"安全帽","配置数量":"若干"}]}
+~~~
+ 
+**输出**
+
+~~~json
+{
+  "id": "dsh-guard-plan-qc.GP-002.4f14475e",
+  "ruleId": "GP-002",
+  "severity": "warn",
+  "locator": {
+    "column": "配置数量",
+    "row": 1
+  },
+  "found": "第 1 行配置数量「若干」不是数字",
+  "expected": "配置数量应写成数字（可带单位，如「2双」）",
+  "fix": "改用数字填写，例如 2 或 2双"
+}
+~~~
+
+*来源 `tests/fixtures/GP-002/GP-002-unsafe.json (cases.json expects GP-002 count 1); run via lib/index.mjs rules/guard-plan-qc.yaml`*
+
 | 你会问 | 它怎么答 |
 |---|---|
 | 某行填了品名，规格型号空着，会被报出吗？ | 会。`GP-001` 要求每行填写 `requiredFields` 里的字段——出厂为 品名、规格型号、配置数量，可按本机构表式替换——缺哪项就连同缺失的栏目名一并报出该行，空串视为未填。它只核对栏目是否填了，不判断所配用品或其规格是否恰当。 |

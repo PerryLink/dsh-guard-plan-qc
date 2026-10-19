@@ -28,6 +28,35 @@ dsh --profile <name> --dump-config | grep 'dsh-guard-plan-qc'
 
 The table below is the example set: the first row is the detailed walkthrough, the remaining rows are short cases.
 
+#### Detailed output
+
+**Tool** `guard_plan_qc`
+
+**Input**
+
+~~~json
+{"headcount":20,"rows":[{"品名":"安全帽","配置数量":"若干"}]}
+~~~
+ 
+**Output**
+
+~~~json
+{
+  "id": "dsh-guard-plan-qc.GP-002.4f14475e",
+  "ruleId": "GP-002",
+  "severity": "warn",
+  "locator": {
+    "column": "配置数量",
+    "row": 1
+  },
+  "found": "第 1 行配置数量「若干」不是数字",
+  "expected": "配置数量应写成数字（可带单位，如「2双」）",
+  "fix": "改用数字填写，例如 2 或 2双"
+}
+~~~
+
+*Observed from `tests/fixtures/GP-002/GP-002-unsafe.json (cases.json expects GP-002 count 1); run via lib/index.mjs rules/guard-plan-qc.yaml`*
+
 | You ask | What it answers |
 |---|---|
 | A row names the product but leaves 规格型号 empty. Is that reported? | Yes. `GP-001` requires every row to fill the fields in `requiredFields` — shipped as 品名, 规格型号 and 配置数量, replaceable with your own table's columns — and reports the row together with the fields it is missing; an empty string counts as unfilled. It checks that the columns are filled, not whether the product or its specification is the right one. |
