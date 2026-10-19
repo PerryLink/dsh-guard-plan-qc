@@ -3,6 +3,7 @@
 [English](README.md) · [简体中文](README-zh.md) · [Español](README-es.md) · [Português](README-pt.md) · [हिन्दी](README-hi.md)
 
 [![DSH Market](https://raw.githubusercontent.com/2BingLing/dsh-market/master/assets/readme/badge-listed-en.svg)](https://dsh.market/)
+[![dshfind](https://dshfind.com/api/badge/PerryLink/dsh-guard-plan-qc?metric=downloads)](https://dshfind.com/en/plugins/PerryLink/dsh-guard-plan-qc?ref=badge)
 
 `dsh-guard-plan-qc` lee una tabla de configuración de equipos de protección laboral —el número de personas y el periodo de configuración que declara el material, más una fila por producto configurado— y comprueba la completitud y la coherencia interna de esa tabla: que cada fila rellene 品名 (nombre), 规格型号 (especificación) y 配置数量 (cantidad), que la cantidad se analice como un número mayor que cero, que se pueda deducir del número de personas declarado por el factor por persona que usted configure, que la 发放日期 (fecha de entrega) caiga dentro del periodo de configuración, que la 有效截止日期 (fecha de caducidad) sea posterior a la fecha de entrega y que la tabla cubra las categorías de productos que usted exige.
 
