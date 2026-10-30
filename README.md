@@ -90,19 +90,9 @@ suffices, or whether it counts as special protective equipment.
 
 > ### ⚠️ Read this before trusting a citation in the report
 >
-> **Every `excerpt` in this plugin's rule pack says, in so many words, that the clause text was not
-> obtained.** The regime lives in **GB 39800.1《个体防护装备配备规范》** and 《劳动防护用品监督管理规定》.
-> The verification pass for this plugin could not retrieve verbatim clause text from them, so rather than
-> paraphrase a quotation the pack states the gap in the `excerpt` field itself and puts the honest
-> reasoning in `note`. Everything is therefore capped at `warn` (principle-derived) or `info` (locally
-> configured), and a test asserts that no rule claims a quotation it does not have. **When the texts are
-> in hand, two things must be done: replace each `excerpt` with the real clause, and raise `kind` to
-> `direct`.**
+> **`excerpt` status is per rule, not uniform.** Some rules quote the clause verbatim (`kind: direct`), some are derived from the principle of the cited articles (`kind: derived-from-principle`, capped at `warn`), and some use thresholds your institution configures (`kind: institutional-configuration`, capped at `info`). The pack never paraphrases a quotation: when the text was not obtained, the `excerpt` field says so and the reasoning lives in `note`; a test asserts that no rule claims a quotation it does not have. **For any rule still marked as not obtained, replace the `excerpt` with the real clause and raise `kind` to `direct` once the text is in hand.**
 >
-> **The two numbers that would make this plugin powerful are the two it refuses to invent.** How many
-> items each person needs (`GP-003` `factors`) and which product categories a job must cover (`GP-006`
-> `requiredCategories`) depend on the hazard identification for *your* project, not on a national figure.
-> Both ship **empty**, and a rule whose list is unset reports itself in `skipped` rather than passing.
+> The conclusion is the reviewer's: this plugin lists differences it can point to in the material and does not decide facts or compliance.
 
 ## Compatibility
 
