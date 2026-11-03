@@ -1,6 +1,6 @@
 # dsh-guard-plan-qc — 劳动保护与安全防护用品配置表核对
 
-## 快速试跑（1 分钟）
+### 快速试跑（1 分钟）
 
 ```bash
 node samples/quickstart/run.mjs --check
