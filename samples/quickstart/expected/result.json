@@ -1,0 +1,10 @@
+{
+  "tool": "guard_plan_qc",
+  "issueCount": 1,
+  "summary": {
+    "error": 0,
+    "warn": 0,
+    "info": 1
+  },
+  "skippedCount": 5
+}
