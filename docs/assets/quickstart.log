@@ -1,0 +1,3 @@
+$ node samples/quickstart/run.mjs
+guard_plan_qc: 1 issue(s) — error 0, warn 0, info 1
+skipped: 5
