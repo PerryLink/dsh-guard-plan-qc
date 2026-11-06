@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-guard-plan-qc-flow-dark.svg">
-  <img src="docs/assets/dsh-guard-plan-qc-flow-light.svg" width="100%" alt="dsh-guard-plan-qc flujo de datos: tabla de configuración (headcount / periodFrom / periodTo + rows[]) → herramienta guard_plan_qc → paquete de reglas rules/guard-plan-qc.yaml (GP-001..GP-006) → informe issues[] + skipped[] → decisión del revisor; la configuración entra por rulesFile / disabledRules / onlyRules / skipNotes / timeoutMs">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-guard-plan-qc-hero-en-dark.webp">
+  <img src="docs/assets/dsh-guard-plan-qc-hero-en-light.webp" width="100%" alt="dsh-guard-plan-qc: el nombre y las frases de valor a la izquierda; a la derecha, una tabla de configuración de equipos de protección cuya celda de cantidad dice «several» y no se analiza como número; debajo, la tarjeta de hallazgo GP-002 (fila 1 · Qty · warn) y la nota skipped[] 5: cada entrada omitida o sin diferencias queda explicada y la conclusión queda en manos del revisor">
 </picture>
 
 # dsh-guard-plan-qc
@@ -43,6 +43,11 @@ No juzga si un equipo concreto es la protección correcta frente a un peligro co
 - **Para quién es**: responsables de seguridad y administradores de equipos de protección; no hace falta saber usar la línea de comandos — basta con entregar el material en el chat.
 - **Qué aporta usted**: el material original sobre el que trabaja la comprobación (una tabla, un registro o un documento); el original nunca se modifica. Excel puede convertirse antes a JSON/YAML, incluso en el chat si la plataforma lo permite.
 - **Qué recibe**: una lista de «qué fila, qué columna, qué falta y cómo corregirlo»; cada comprobación que no pudo ejecutarse se enumera en `skipped` con su motivo.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-guard-plan-qc-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-guard-plan-qc-flow-v5-light.svg" width="100%" alt="Estructura de dsh-guard-plan-qc: a la izquierda el lado de la expectativa (declaraciones de cabecera más requiredFields, factors y requiredCategories); a la derecha el lado real (rows[] con una columna por fila); en el centro, seis placas de regla conectadas a las líneas que comparan — GP-001 y GP-004 cruzan ambos lados, GP-002 y GP-005 se quedan dentro de una fila, GP-003 y GP-006 se detienen en skipped porque sus listas vienen vacías; las salidas son issues[] y skipped[], y la conclusión queda en manos del revisor">
+</picture>
 
 ## Instalación en tres pasos
 
@@ -317,7 +322,7 @@ node samples/quickstart/run.mjs
 # => skipped: 5
 ```
 
-La entrada del ejemplo está en `samples/quickstart/input/`, la salida esperada en `samples/quickstart/expected/result.json` y la captura en `docs/assets/quickstart.png`. Las imágenes del README las genera por programa [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python + Pillow) y se pueden volver a ejecutar sin riesgo; el diagrama de flujo antiguo de una sola variante y las imágenes de demostración se quedan en `docs/assets/` para enlaces externos, mientras los README solo citan el par claro/oscuro nuevo.
+La entrada del ejemplo está en `samples/quickstart/input/`, la salida esperada en `samples/quickstart/expected/result.json` y la captura en `docs/assets/quickstart.png`. Las imágenes del README las genera por programa [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) —Pillow para el banner hero, SVG escrito a mano para el diagrama de estructura— y se pueden volver a ejecutar sin riesgo; el diagrama de flujo antiguo de una sola variante y las imágenes de demostración se quedan en `docs/assets/` para enlaces externos, mientras los README solo citan el nuevo hero y el diagrama de estructura flow-v5, cada uno en claro y oscuro.
 
 Temas: `deepseek-harness`, `dsh`, `dsh-plugin`, `cordis`, `guard`, `plan`
 

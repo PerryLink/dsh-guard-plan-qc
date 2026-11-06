@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-guard-plan-qc-flow-dark.svg">
-  <img src="docs/assets/dsh-guard-plan-qc-flow-light.svg" width="100%" alt="dsh-guard-plan-qc data flow: configuration table (headcount / periodFrom / periodTo + rows[]) → guard_plan_qc tool → rules/guard-plan-qc.yaml rule pack (GP-001..GP-006) → issues[] + skipped[] report → reviewer decision; config flows in via rulesFile / disabledRules / onlyRules / skipNotes / timeoutMs">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-guard-plan-qc-hero-en-dark.webp">
+  <img src="docs/assets/dsh-guard-plan-qc-hero-en-light.webp" width="100%" alt="dsh-guard-plan-qc: the plugin name and its value lines on the left; on the right a PPE configuration table whose quantity cell reads «several» and parses to no number, then the GP-002 finding (row 1 · Qty · warn) and the skipped[] 5 note — every skipped or no-diff entry explained, the verdict stays with the reviewer">
 </picture>
 
 # dsh-guard-plan-qc
@@ -43,6 +43,11 @@ It does not judge whether a given product is the right protection against a give
 - **Who it is for**: safety officers and PPE administrators; no command line required — hand the material over in chat.
 - **What you give it**: the source material the check works on (a table, register, or document); the original is never modified. Excel can be converted to JSON/YAML first, in chat if the platform supports it.
 - **What you get back**: a list of "which row, which column, what is missing, how to fix it"; every check that could not run is listed in `skipped` with its reason.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-guard-plan-qc-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-guard-plan-qc-flow-v5-light.svg" width="100%" alt="dsh-guard-plan-qc structure: the expectation side on the left (header declarations plus requiredFields, factors, requiredCategories), the actual side on the right (rows[] with one column per row); six rule plates in the gutter are wired to the lines they compare — GP-001 and GP-004 cross both sides, GP-002 and GP-005 stay inside a row, GP-003 and GP-006 stop in skipped because their lists ship empty; the outlets are issues[] and skipped[], and the verdict stays with the reviewer">
+</picture>
 
 ## Three-step setup
 
@@ -317,7 +322,7 @@ node samples/quickstart/run.mjs
 # => skipped: 5
 ```
 
-The sample input lives in `samples/quickstart/input/`, the expected output in `samples/quickstart/expected/result.json`, and a screenshot in `docs/assets/quickstart.png`. The README images are generated programmatically by [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python + Pillow) and are safe to re-run; the older single-skin flow diagram and demo images stay in `docs/assets/` for external deep links, while the READMEs reference only the new light/dark pair.
+The sample input lives in `samples/quickstart/input/`, the expected output in `samples/quickstart/expected/result.json`, and a screenshot in `docs/assets/quickstart.png`. The README images are generated programmatically by [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) — Pillow for the hero banner, hand-written SVG for the structure diagram — and are safe to re-run; the older single-skin flow diagram and demo images stay in `docs/assets/` for external deep links, while the READMEs reference only the new hero and flow-v5 structure diagram, each in light and dark.
 
 Topics: `deepseek-harness`, `dsh`, `dsh-plugin`, `cordis`, `guard`, `plan`
 

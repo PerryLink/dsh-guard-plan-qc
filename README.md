@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-guard-plan-qc-flow-dark.svg">
-  <img src="docs/assets/dsh-guard-plan-qc-flow-light.svg" width="100%" alt="dsh-guard-plan-qc 数据流：配置表（headcount / periodFrom / periodTo + rows[]）→ guard_plan_qc 工具 → rules/guard-plan-qc.yaml 规则包（GP-001..GP-006）→ issues[] 与 skipped[] 报告 → 审核人决定；配置项从 rulesFile 等键注入">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-guard-plan-qc-hero-zh-dark.webp">
+  <img src="docs/assets/dsh-guard-plan-qc-hero-zh-light.webp" width="100%" alt="dsh-guard-plan-qc 配图：左列是插件名与价值句；右侧是一份劳动防护用品配置表——安全帽那行的配置数量写着「若干」，放大后解析不出数字，下方是 GP-002 的差异卡（第 1 行 · 配置数量 · warn）与 skipped[] 5 的说明：未执行与无差异逐条写明，结论留给审核人">
 </picture>
 
 # dsh-guard-plan-qc
@@ -43,6 +43,11 @@ dsh plugin --profile <name> add dsh-guard-plan-qc
 - **给谁用**：安全员、劳保用品管理员；不用懂命令行，在对话里把材料交给它即可。
 - **你交什么**：这项核对用到的原始材料（表格、清单或文书）；不改原件。Excel 可先转成 JSON/YAML，对话里也能代转。
 - **它交什么**：一份「哪一行、哪一栏、差什么、怎么补」的清单；没能执行的检查逐条列入 `skipped` 并写明原因。
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-guard-plan-qc-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-guard-plan-qc-flow-v5-light.svg" width="100%" alt="dsh-guard-plan-qc 结构图：左侧是表头声明与规则参数（requiredFields、factors、requiredCategories），右侧是行内容 rows[] 的栏目表；中间六块规则牌以跨栏线相连——GP-001、GP-004 跨两侧读取，GP-002、GP-005 在行内自洽，GP-003、GP-006 因清单出厂为空停在 skipped；出口是 issues[] 与 skipped[] 两条，结论留给审核人">
+</picture>
 
 ## 三步上手
 
@@ -317,7 +322,7 @@ node samples/quickstart/run.mjs
 # => skipped: 5
 ```
 
-样例输入在 `samples/quickstart/input/`，期望输出在 `samples/quickstart/expected/result.json`，截图见 `docs/assets/quickstart.png`。README 配图由 [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) 程序化生成（Python + Pillow），可重复执行；旧的单版流程图与演示图保留在 `docs/assets/` 供外链使用，README 只引用新生成的深浅双版。
+样例输入在 `samples/quickstart/input/`，期望输出在 `samples/quickstart/expected/result.json`，截图见 `docs/assets/quickstart.png`。README 配图由 [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) 程序化生成——hero 横幅用 Pillow 画、结构图用手写 SVG 画——可重复执行；旧的单版流程图与演示图保留在 `docs/assets/` 供外链使用，README 只引用新生成的 hero 与 flow-v5 结构图（各含深浅双版）。
 
 Topics：`deepseek-harness`, `dsh`, `dsh-plugin`, `cordis`, `guard`, `plan`
 

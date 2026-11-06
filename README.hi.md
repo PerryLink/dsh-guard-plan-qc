@@ -1,8 +1,8 @@
 <div align="center">
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-guard-plan-qc-flow-dark.svg">
-  <img src="docs/assets/dsh-guard-plan-qc-flow-light.svg" width="100%" alt="dsh-guard-plan-qc डेटा प्रवाह: विन्यास तालिका (headcount / periodFrom / periodTo + rows[]) → guard_plan_qc टूल → rules/guard-plan-qc.yaml नियम-पैक (GP-001..GP-006) → issues[] + skipped[] रिपोर्ट → समीक्षक का निर्णय; कॉन्फ़िगरेशन rulesFile / disabledRules / onlyRules / skipNotes / timeoutMs से आता है">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-guard-plan-qc-hero-en-dark.webp">
+  <img src="docs/assets/dsh-guard-plan-qc-hero-en-light.webp" width="100%" alt="dsh-guard-plan-qc: बाईं ओर प्लगइन का नाम और मूल्य-पंक्तियाँ; दाईं ओर संरक्षण उपकरणों की कॉन्फ़िगरेशन तालिका जिसका मात्रा-कक्ष «several» लिखता है और संख्या के रूप में पढ़ा नहीं जाता; नीचे GP-002 का अंतर-कार्ड (पंक्ति 1 · Qty · warn) और skipped[] 5 की टिप्पणी — हर छोड़ी गई या बिना अंतर वाली प्रविष्टि का कारण लिखा है, निर्णय समीक्षक के पास रहता है">
 </picture>
 
 # dsh-guard-plan-qc
@@ -43,6 +43,11 @@ dsh plugin --profile <name> add dsh-guard-plan-qc
 - **किसके लिए**: सुरक्षा अधिकारी और उपकरण प्रशासक; कमांड लाइन जानने की ज़रूरत नहीं — सामग्री चैट में सौंप दें।
 - **आप क्या देते हैं**: जाँच की जाने वाली मूल सामग्री (तालिका, रजिस्टर या दस्तावेज़); मूल कभी नहीं बदला जाता। Excel को पहले JSON/YAML में बदला जा सकता है, प्लेटफ़ॉर्म दे तो चैट में भी।
 - **आपको क्या मिलता है**: «कौन-सी पंक्ति, कौन-सा स्तंभ, क्या छूटा, कैसे सुधारें» की सूची; जो जाँच नहीं चल पाई वह `skipped` में कारण के साथ दर्ज होती है।
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/dsh-guard-plan-qc-flow-v5-dark.svg">
+  <img src="docs/assets/dsh-guard-plan-qc-flow-v5-light.svg" width="100%" alt="dsh-guard-plan-qc की संरचना: बाईं ओर अपेक्षा-पक्ष (हेडर घोषणाएँ तथा requiredFields, factors, requiredCategories); दाईं ओर वास्तविक पक्ष (rows[] में प्रति पंक्ति एक स्तंभ); बीच में छह नियम-पट्टिकाएँ उन पंक्तियों से जुड़ी हैं जिनकी वे तुलना करती हैं — GP-001 और GP-004 दोनों पक्षों को पार करते हैं, GP-002 और GP-005 एक पंक्ति के भीतर रहते हैं, GP-003 और GP-006 skipped में रुक जाते हैं क्योंकि उनकी सूचियाँ खाली आती हैं; निर्गम issues[] और skipped[] हैं, और निर्णय समीक्षक के पास रहता है">
+</picture>
 
 ## तीन चरणों में शुरुआत
 
@@ -317,7 +322,7 @@ node samples/quickstart/run.mjs
 # => skipped: 5
 ```
 
-नमूना इनपुट `samples/quickstart/input/` में, अपेक्षित आउटपुट `samples/quickstart/expected/result.json` में, और स्क्रीनशॉट `docs/assets/quickstart.png` में है। README की छवियाँ [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) (Python + Pillow) से कार्यक्रमपूर्वक बनती हैं और दोबारा चलाई जा सकती हैं; पुराना एकल-संस्करण प्रवाह आरेख और डेमो छवियाँ बाहरी लिंक के लिए `docs/assets/` में रहती हैं, जबकि README केवल नया हल्का/गहरा जोड़ा उद्धृत करते हैं।
+नमूना इनपुट `samples/quickstart/input/` में, अपेक्षित आउटपुट `samples/quickstart/expected/result.json` में, और स्क्रीनशॉट `docs/assets/quickstart.png` में है। README की छवियाँ [`scripts/gen-readme-assets.py`](scripts/gen-readme-assets.py) से कार्यक्रमपूर्वक बनती हैं — hero बैनर के लिए Pillow, संरचना चित्र के लिए हाथ से लिखा SVG — और दोबारा चलाई जा सकती हैं; पुराना एकल-संस्करण प्रवाह आरेख और डेमो छवियाँ बाहरी लिंक के लिए `docs/assets/` में रहती हैं, जबकि README केवल नया hero और flow-v5 संरचना चित्र उद्धृत करते हैं, दोनों हल्के और गहरे रूप में।
 
 विषय: `deepseek-harness`, `dsh`, `dsh-plugin`, `cordis`, `guard`, `plan`
 
