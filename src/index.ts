@@ -1,6 +1,6 @@
 import { readFile } from 'node:fs/promises'
 import { existsSync } from 'node:fs'
-import { dirname, isAbsolute, resolve } from 'node:path'
+import { basename, dirname, extname, isAbsolute, resolve } from 'node:path'
 import type { Context } from '@deepseek-ai/cordis'
 import { defineTool } from '@deepseek-ai/dsh-tools'
 import { Config } from './config.ts'
@@ -52,10 +52,38 @@ export function resolvePackageFile(relative: string): string {
 }
 
 /** Read material from a file path or use the inline text as-is. */
-async function readMaterial(file: string | undefined, material: string | undefined, signal: AbortSignal): Promise<{ text: string; target: string }> {
+async function readMaterial(
+  file: string | undefined,
+  material: string | undefined,
+  signal: AbortSignal,
+  header: { subject?: string; headcount?: number; periodFrom?: string; periodTo?: string } = {},
+): Promise<{ text: string; target: string }> {
   if (file !== undefined && file.trim() !== '') {
     const path = resolve(file)
     signal.throwIfAborted()
+    const extension = extname(path).toLowerCase()
+    if (['.docx', '.xlsx', '.xlsm', '.csv', '.tsv'].includes(extension)) {
+      let ingestToTable: (source: Buffer, filename: string, options: Record<string, unknown>) => { ok: boolean; table?: { rows: Record<string, string>[] }; error?: string }
+      try {
+        const api = (await import('dsh-table-ingest/api')) as {
+          ingestToTable: (source: Buffer, filename: string, options: Record<string, unknown>) => { ok: boolean; table?: { rows: Record<string, string>[] }; error?: string }
+        }
+        ingestToTable = api.ingestToTable
+      } catch {
+        throw new MaterialError('要直接读 Word/Excel/CSV，请先安装 dsh-table-ingest（dsh plugin --profile <name> add dsh-table-ingest），或先把材料转成 JSON/YAML。')
+      }
+      const buffer = await readFile(path, { signal })
+      const table = ingestToTable(buffer, path, {})
+      if (!table.ok || table.table === undefined) throw new MaterialError(`无法从 ${path} 抽出表格：${table.error ?? '未知原因'}`)
+      const document = {
+        subject: header.subject ?? basename(path).replace(/\.[^.]+$/u, ''),
+        ...(header.headcount === undefined ? {} : { headcount: header.headcount }),
+        ...(header.periodFrom === undefined ? {} : { periodFrom: header.periodFrom }),
+        ...(header.periodTo === undefined ? {} : { periodTo: header.periodTo }),
+        rows: table.table.rows,
+      }
+      return { text: JSON.stringify(document), target: path }
+    }
     const text = await readFile(path, { encoding: 'utf8', signal })
     return { text, target: path }
   }
@@ -81,8 +109,12 @@ export function apply(ctx: Context, config: ConfigShape): () => void {
         '劳动保护与安全防护用品配置表核对（按公开的配备标准核对品名规格与配置数量，仅提示差异，不作出定性结论）本工具只列出材料与所引条款之间的字面差异，供人工复核，不作出任何定性结论。' +
         '材料为 JSON 或 YAML；无法执行的检查会列在 skipped 中。',
       parameters: {
-        file: { type: 'string', description: '材料文件绝对路径（JSON 或 YAML）。与 material 二选一。' },
+        file: { type: 'string', description: '材料文件绝对路径（JSON/YAML，或 .docx/.xlsx/.xlsm/.csv/.tsv；文档格式需安装 dsh-table-ingest）。与 material 二选一。' },
         material: { type: 'string', description: '内联材料文本（JSON 或 YAML）。与 file 二选一。' },
+        subject: { type: 'string', description: '文档输入时的工程/单位名称；默认用文件名。' },
+        headcount: { type: 'integer', description: '文档输入时的配置人数；缺省时相关规则会跳过。' },
+        periodFrom: { type: 'string', description: '文档输入时的配置期间起（YYYY-MM-DD）。' },
+        periodTo: { type: 'string', description: '文档输入时的配置期间止（YYYY-MM-DD）。' },
         rulesFile: { type: 'string', description: '覆盖配置中的规则库路径（相对插件包根或绝对路径）。' },
         only: {
           type: 'array',
@@ -132,7 +164,7 @@ export function apply(ctx: Context, config: ConfigShape): () => void {
       async execute(args, exec) {
         const relative = args.rulesFile !== undefined && args.rulesFile.trim() !== '' ? args.rulesFile : config.rulesFile
         const [material, ruleset] = await Promise.all([
-          readMaterial(args.file, args.material, exec.signal),
+          readMaterial(args.file, args.material, exec.signal, { subject: args.subject, headcount: args.headcount, periodFrom: args.periodFrom, periodTo: args.periodTo }),
           loadRulesetFile(resolvePackageFile(relative)),
         ])
         exec.signal.throwIfAborted()

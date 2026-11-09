@@ -1,20 +1,35 @@
 {
   "schemaVersion": 1,
-  "tier": "L1-lite",
+  "tier": "L1+ingest",
   "input_formats": [
     "json",
-    "yaml"
+    "yaml",
+    "docx",
+    "xlsx",
+    "xlsm",
+    "csv",
+    "tsv"
   ],
   "outputs": [
     "markdown",
     "json"
   ],
   "rules": {
-    "total": 6
+    "total": 6,
+    "executed": 3,
+    "skipped": 3,
+    "manual": 0,
+    "unsupported": 0
   },
   "limits": [
-    "防护用品配置表的嵌套 JSON/YAML；尚无文档适配器",
-    "无真实语料/P/R；benchmark 未测",
-    "不做定性/合规结论"
-  ]
+    "文档入口需要另装 dsh-table-ingest；CSV 不携带配置人数/期间，需传 headcount/periodFrom/periodTo",
+    "3 条规则因缺少培训/工种等字段而跳过；跳过不等于通过",
+    "不判断防护用品是否适合具体危害，只核对配置数量与品名/规格"
+  ],
+  "benchmark": {
+    "kind": "quickstart-sample",
+    "corpus_size": 1,
+    "note": "one CSV row through dsh-table-ingest; headcount/period supplied as tool params; not a real-world P/R",
+    "measured_at": "2026-11-09"
+  }
 }
