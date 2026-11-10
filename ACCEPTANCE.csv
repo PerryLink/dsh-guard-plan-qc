@@ -1,0 +1,3 @@
+req_id,metric,threshold,actual,script,evidence_sha256,pass,source,counted
+CHK-GUARD-PLAN-QC-A01,vitest 真实运行,33/33,33,npx vitest run,531fcde612d4b34140cd282a15c31fa6157fd2d3aa956a8cafe93b9ca8630914,true,public/synthetic,false
+CHK-GUARD-PLAN-QC-A02,失败用例数,0,0,npx vitest run,531fcde612d4b34140cd282a15c31fa6157fd2d3aa956a8cafe93b9ca8630914,true,public/synthetic,false
