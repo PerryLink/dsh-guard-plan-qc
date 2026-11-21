@@ -49,6 +49,11 @@ No juzga si un equipo concreto es la protección correcta frente a un peligro co
   <img src="docs/assets/dsh-guard-plan-qc-flow-v5-light.svg" width="100%" alt="Estructura de dsh-guard-plan-qc: a la izquierda el lado de la expectativa (declaraciones de cabecera más requiredFields, factors y requiredCategories); a la derecha el lado real (rows[] con una columna por fila); en el centro, seis placas de regla conectadas a las líneas que comparan — GP-001 y GP-004 cruzan ambos lados, GP-002 y GP-005 se quedan dentro de una fila, GP-003 y GP-006 se detienen en skipped porque sus listas vienen vacías; las salidas son issues[] y skipped[], y la conclusión queda en manos del revisor">
 </picture>
 
+![dsh-guard-plan-qc: ejecución real de terminal](docs/assets/dsh-guard-plan-qc-demo.gif)
+
+*Repetición animada de una ejecución real registrada en este repositorio.*
+
+
 ## Instalación en tres pasos
 
 1. **Instalar** (elija un canal):

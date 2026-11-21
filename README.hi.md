@@ -49,6 +49,11 @@ dsh plugin --profile <name> add dsh-guard-plan-qc
   <img src="docs/assets/dsh-guard-plan-qc-flow-v5-light.svg" width="100%" alt="dsh-guard-plan-qc की संरचना: बाईं ओर अपेक्षा-पक्ष (हेडर घोषणाएँ तथा requiredFields, factors, requiredCategories); दाईं ओर वास्तविक पक्ष (rows[] में प्रति पंक्ति एक स्तंभ); बीच में छह नियम-पट्टिकाएँ उन पंक्तियों से जुड़ी हैं जिनकी वे तुलना करती हैं — GP-001 और GP-004 दोनों पक्षों को पार करते हैं, GP-002 और GP-005 एक पंक्ति के भीतर रहते हैं, GP-003 और GP-006 skipped में रुक जाते हैं क्योंकि उनकी सूचियाँ खाली आती हैं; निर्गम issues[] और skipped[] हैं, और निर्णय समीक्षक के पास रहता है">
 </picture>
 
+![dsh-guard-plan-qc का असली टर्मिनल रन](docs/assets/dsh-guard-plan-qc-demo.gif)
+
+*इस रिपॉज़िटरी में दर्ज असली रन का एनिमेटेड रीप्ले।*
+
+
 ## तीन चरणों में शुरुआत
 
 1. **इंस्टॉल करें** (कोई एक माध्यम चुनें):
