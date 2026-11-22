@@ -11,6 +11,8 @@
 
 面向 DeepSeek Harness 的数据型核查插件：读取一份劳保用品配置表（表头声明配置人数与配置期间，每种用品一行），按随包的 6 条规则（GP-001..GP-006）逐条核对，只列材料内部能指认的差异，不判合规、不认定责任。
 
+最近一次核验：DeepSeek Harness `dsh-v0.2.3-alpha.1`（2026-11-22）。
+
 [安装](#三步上手) · [配置](#配置) · [FAQ](#faq) · [简体中文](README.md) · [English](README.en.md) · [Español](README.es.md) · [Português](README.pt.md) · [हिन्दी](README.hi.md)
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-3366CC?style=flat-square&labelColor=2B3245)](LICENSE)

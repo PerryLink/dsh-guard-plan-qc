@@ -11,6 +11,8 @@
 
 Plugin verificador de datos para DeepSeek Harness: lee una tabla de configuración de equipos de protección laboral (la cabecera declara el número de personas y el periodo de configuración, y cada producto ocupa una fila), aplica el paquete de 6 reglas que trae (GP-001..GP-006) y solo enumera las divergencias que puede señalar dentro del material — nunca un juicio de cumplimiento, nunca una atribución de responsabilidad.
 
+Última verificación: DeepSeek Harness `dsh-v0.2.3-alpha.1` (2026-11-22).
+
 [Instalar](#instalación-en-tres-pasos) · [Configuración](#configuración) · [FAQ](#faq) · [简体中文](README.md) · [English](README.en.md) · [Español](README.es.md) · [Português](README.pt.md) · [हिन्दी](README.hi.md)
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-3366CC?style=flat-square&labelColor=2B3245)](LICENSE)
@@ -52,7 +54,6 @@ No juzga si un equipo concreto es la protección correcta frente a un peligro co
 ![dsh-guard-plan-qc: ejecución real de terminal](docs/assets/dsh-guard-plan-qc-demo.gif)
 
 *Repetición animada de una ejecución real registrada en este repositorio.*
-
 
 ## Instalación en tres pasos
 

@@ -11,6 +11,8 @@
 
 DeepSeek Harness के लिए डेटा-आधारित जाँच प्लगइन: एक उपकरण विन्यास तालिका पढ़ता है (शीर्ष में व्यक्तियों की संख्या और विन्यास अवधि, तथा हर उपकरण के लिए एक पंक्ति), साथ आने वाले 6 नियमों का पैक (GP-001..GP-006) लागू करता है, और केवल वे अंतर गिनाता है जिन्हें सामग्री के भीतर इंगित किया जा सकता है — कोई अनुपालन निर्णय नहीं, कोई दायित्व निर्धारण नहीं।
 
+अंतिम सत्यापन: DeepSeek Harness `dsh-v0.2.3-alpha.1` (2026-11-22).
+
 [इंस्टॉल](#तीन-चरणों-में-शुरुआत) · [कॉन्फ़िगरेशन](#कॉन्फ़िगरेशन) · [FAQ](#faq) · [简体中文](README.md) · [English](README.en.md) · [Español](README.es.md) · [Português](README.pt.md) · [हिन्दी](README.hi.md)
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-3366CC?style=flat-square&labelColor=2B3245)](LICENSE)
@@ -52,7 +54,6 @@ dsh plugin --profile <name> add dsh-guard-plan-qc
 ![dsh-guard-plan-qc का असली टर्मिनल रन](docs/assets/dsh-guard-plan-qc-demo.gif)
 
 *इस रिपॉज़िटरी में दर्ज असली रन का एनिमेटेड रीप्ले।*
-
 
 ## तीन चरणों में शुरुआत
 

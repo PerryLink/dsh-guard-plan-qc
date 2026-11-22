@@ -11,6 +11,8 @@
 
 A data-only checker plugin for DeepSeek Harness: it reads one PPE configuration table (the header states the headcount and the plan period, then one row per product), applies the 6-rule pack it ships (GP-001..GP-006), and lists only the differences it can point to inside the material — never a compliance verdict, never a liability finding.
 
+Last verified on DeepSeek Harness `dsh-v0.2.3-alpha.1` (2026-11-22).
+
 [Install](#three-step-setup) · [Configuration](#configuration) · [FAQ](#faq) · [简体中文](README.md) · [English](README.en.md) · [Español](README.es.md) · [Português](README.pt.md) · [हिन्दी](README.hi.md)
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-3366CC?style=flat-square&labelColor=2B3245)](LICENSE)
