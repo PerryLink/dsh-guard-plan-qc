@@ -7,6 +7,8 @@
 
 # dsh-guard-plan-qc
 
+Current version `0.2.13`.
+
 **Turn one labour-protection PPE configuration table into a row-by-row list of which row, which column, and what to fix — the verdict stays with the reviewer.**
 
 A data-only checker plugin for DeepSeek Harness: it reads one PPE configuration table (the header states the headcount and the plan period, then one row per product), applies the 6-rule pack it ships (GP-001..GP-006), and lists only the differences it can point to inside the material — never a compliance verdict, never a liability finding.
